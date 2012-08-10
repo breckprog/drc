@@ -11,6 +11,7 @@ class PyAudioSink(AudioSink):
             format=pa.get_format_from_width(format.samplewidth),
             channels=format.nchannels,
             rate=format.framerate,
+            frames_per_buffer=format.block_size*2, # for some reason this works
             output=True)
 
     def __call__(self, block, statistics):

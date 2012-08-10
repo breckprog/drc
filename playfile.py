@@ -1,10 +1,12 @@
 import sys
 
 from drc.pipeline import Pipeline
+from drc.processors import AveragePower
 from drc.sinks import PyAudioSink
 from drc.sources import WaveFileSource
 
 from drc.interfaces import AudioProcessor
+from drc.interfaces import AudioSink
 import array
 
 class MuteRightChannel(AudioProcessor):
@@ -18,9 +20,18 @@ class MuteRightChannel(AudioProcessor):
         block = mutable.tostring()
         return block
 
+
+class PrintPower(AudioSink):
+
+    def __call__(self, block, statistics):
+        print 'RMS Power', statistics['rms_power']
+
+
 source = WaveFileSource(sys.argv[1])
 pipeline = Pipeline(source)
-pipeline.add_sink(PyAudioSink())
 #pipeline.add_processor(MuteRightChannel())
+pipeline.add_processor(AveragePower())
+pipeline.add_sink(PyAudioSink())
+pipeline.add_sink(PrintPower())
 pipeline.run()
 

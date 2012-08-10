@@ -3,7 +3,8 @@ from collections import namedtuple
 
 
 AudioFormat = namedtuple('AudioFormat',
-                         ('nchannels', 'samplewidth', 'framerate'))
+    ('nchannels', 'samplewidth', 'framerate', 'block_size'))
+
 
 class AudioSource(object):
     """
