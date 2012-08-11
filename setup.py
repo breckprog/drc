@@ -18,7 +18,6 @@ install_requires=[
     'lepton',
     'pyaudio',
     'PyOpenGL',
-    'PyOpenGLContext',
     ]
 
 tests_require = [
